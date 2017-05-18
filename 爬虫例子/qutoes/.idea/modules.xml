@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../NetAuth/.idea/NetAuth.iml" filepath="$PROJECT_DIR$/../NetAuth/.idea/NetAuth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../imdb/.idea/imdb.iml" filepath="$PROJECT_DIR$/../imdb/.idea/imdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jd2/.idea/jd2.iml" filepath="$PROJECT_DIR$/../jd2/.idea/jd2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jingdong/.idea/jingdong.iml" filepath="$PROJECT_DIR$/../jingdong/.idea/jingdong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../muke/.idea/muke.iml" filepath="$PROJECT_DIR$/../muke/.idea/muke.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mytest/.idea/mytest.iml" filepath="$PROJECT_DIR$/../mytest/.idea/mytest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../netauth3/.idea/netauth3.iml" filepath="$PROJECT_DIR$/../netauth3/.idea/netauth3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../netauth4/.idea/netauth4.iml" filepath="$PROJECT_DIR$/../netauth4/.idea/netauth4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../person/.idea/person.iml" filepath="$PROJECT_DIR$/../person/.idea/person.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/qutoes.iml" filepath="$PROJECT_DIR$/.idea/qutoes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../script/.idea/script.iml" filepath="$PROJECT_DIR$/../script/.idea/script.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../weixin/.idea/weixin.iml" filepath="$PROJECT_DIR$/../weixin/.idea/weixin.iml" />
+    </modules>
+  </component>
+</project>

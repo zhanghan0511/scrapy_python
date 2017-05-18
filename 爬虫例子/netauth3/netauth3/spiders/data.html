@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+
+<!-- 公共资源CSS,JS  -->
+
+
+
+<!--Css -->
+<link rel="stylesheet" type="text/css" href="/idm/css/AdminLTE.min.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/_all-skins.min.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/style.css">
+<link rel="stylesheet" type="text/css" href="/idm/font-awesome-4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/idm/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/common.css">
+<link rel="stylesheet" type="text/css" href="/idm/css/sweetalert.css">
+
+
+<!-- ** Javascript ** -->
+<script type="text/javascript" src="/idm/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/idm/js/app.min.js"></script>
+<script type="text/javascript" src="/idm/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/idm/js/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="/idm/js/fastclick.min.js"></script>
+<script type="text/javascript" src="/idm/js/common.js"></script>
+<script type="text/javascript" src="/idm/js/jquery.form.js"></script>
+<script type="text/javascript" src="/idm/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/idm/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/idm/js/jquerySession.js"></script>
+<script type="text/javascript" src="/idm/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/idm/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script type="text/javascript" src="/idm/js/valid.js"></script>
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>NetAuth统一身份管理及认证系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!--[if lt IE 9]>
+       <script src="../js/html5shiv.min.js"></script>
+       <script src="../js/respond.min.js"></script>
+<![endif]-->
+  </head>
+  <body class="hold-transition skin-blue fixed sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+      <header class="main-header">
+			
+
+
+
+
+
+
+<html>
+	<head>
+	<link href="../../css/bootstrap-select.css" rel="stylesheet" type="text/css">  
+    <link href="../../css/select2.css" rel="stylesheet" type="text/css">
+    <script src="../../js/bootstrap-select.js" type="text/javascript"></script>  
+    <script src="../../js/select2.js" type="text/javascript"></script>
+	    <meta charset="UTF-8">
+		<script type="text/javascript">
+		var toggleFlag = "table";//图标与列表切换标识
+		var toPageNum = "";
+		var pageNum = 100;
+	    var selected=6;
+	    var leftMenu=new Array();
+	    leftMenu[0]="";
+	    leftMenu[1]="../user/userLeft.jsp";// 用户管理
+	    leftMenu[4]="../commonuser/approvalleft.jsp";// 普通用户审批管理
+	    leftMenu[3]="../resource/resourceleft.jsp";// 资源管理
+	    leftMenu[2]="../role/roleleft.jsp";// 角色管理
+	    leftMenu[5]="../policy/policyleft.jsp";// 授权管理
+	    leftMenu[6]="../approval/approvalleft.jsp"; // 审批管理
+	    leftMenu[7]="../synchaccount/synaccountleft.jsp";// 账号同步
+	    leftMenu[8]="../sysconfig/sysconfigleft.jsp";// 系统配置
+	    leftMenu[9]="../audit/auditleft.jsp";//审计管理
+	    leftMenu[10]="";
+		
+	    var rightContent=new Array();
+		
+	    rightContent[0]="";
+	    rightContent[1]="../user/dept/showDeptRight.jsp";// 用户管理
+	    rightContent[4]="../commonuser/currentapprovallist.jsp";// 普通用户审批管理
+	    rightContent[3]="../resource/resourcelist.jsp";// 资源管理
+	    rightContent[2]="../role/rolelist.jsp";// 角色管理
+	    rightContent[5]="../policy/policyinfo.jsp";// 授权管理
+	    rightContent[6]="../approval/approvallist.jsp"; // 审批管理
+	    rightContent[7]="../synConfig/synConfigList/1.do?toggleFlag="+toggleFlag; // 账号同步
+	    rightContent[8]="../sysconfig/setpassword.jsp";// 系统配置
+	    rightContent[9]="/audit/index.jsp"; //审计管理
+	    rightContent[10]="";
+        $(document).ready(function(){
+        	
+        	rightOpen(6);
+        	
+        });
+		function rightOpen(v) {
+
+		    if($("body").attr("class")=="skin-blue fixed sidebar-mini sidebar-collapse"){
+			  	$("body").removeClass("sidebar-collapse");// 左侧边栏收缩
+		    } 
+
+  			if($("body").attr("class").indexOf("fixed sidebar-mini sidebar-collapse")>=0){
+	 			 $("body").removeClass("sidebar-collapse");//侧边栏收缩
+     			}
+
+		    $("#right_frame").hide();
+  			$("#right_content").show();
+			$("li").removeClass("active");
+			if(v ==1){
+				$("#user").addClass("active");	
+			}else if(v==2){
+				$("#role").addClass("active");
+			}else if(v ==4 ){
+				$("#commonuserapprove").addClass("active");
+			}else if(v ==3 ){
+				$("#resource").addClass("active");
+			}else if(v == 7){
+				$("#resource11").addClass("active");
+			}else if(v == 6 ){
+				$("#author").addClass("active");
+			}else if(v == 8){
+				$("#sysconfig").addClass("active");
+			}else if(v ==9 ){
+				$("#approve").addClass("active");
+				$("#right_content").hide();
+				$("#right_frame").show();
+				$("#right_frame").attr("src","/audit/improperhandle/exceptionLog.action");
+			}else if(v ==5 ){
+				$("#policy").addClass("active");
+			}
+			$.post("/idm/currency/loginstatus.do",function(data){
+				if(data && new String(data) == "true"){
+			$("#left_menu").load(leftMenu[v]);
+		    $("#right_content").load(rightContent[v]);
+				}else{
+					window.location.href="/idm/jsp/login.jsp";
+				}
+			})
+		}
+		
+		$(function(){
+			$("#hid").click(function(){
+				var picClass = $("#logoPic").attr("class").indexOf("open");
+				if(picClass == -1){
+					$("#logoPic").addClass("hide").addClass("open");
+				}else{
+					$("#logoPic").removeClass("hide").removeClass("open");
+				}
+			});
+		});
+		
+		// 店家logo隐藏 
+		function hidLogo() {
+			
+			var picClass = $("#logoPic").attr("class").indexOf("hide");
+			if(picClass == -1){
+				$("#logoPic").addClass("hide");
+			}else{
+				$("#logoPic").removeClass("hide");
+			}
+		}
+		
+		
+		</script>
+	</head>
+	<div>
+			<!-- Header Navbar: style can be found in header.less -->
+        	<nav class="navbar navbar-static-top" role="navigation">
+        	<!-- Sidebar toggle button-->
+
+				 <a class="sidebar-toggle" data-toggle="offcanvas" role="button" id="hid" > 
+
+				<!-- <a href="#"  onclick="dealLog()" class="sidebar-toggle" data-toggle="offcanvas" role="button" > -->
+
+					<span class="sr-only">Toggle navigation</span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+				</a>
+	          	<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+		            <ul class="nav navbar-nav">
+		            <!-- Messages: style can be found in dropdown.less
+					    <li class="active" id="workspace"><a href="#" onclick="changeContent(0)">我的工作台<span class="sr-only">(current)</span></a></li>-->
+																		<!--用户管理  -->
+						<li id="user"><a href="#" onclick="rightOpen(1)">???header.user.manager???</a></li>
+						
+						<li id="role"><a href="#" onclick="rightOpen(2)">角色管理</a></li>
+																		<!--权限管理  -->
+					<li id="policy"><a href="#" onclick="rightOpen(5)">???header.policy.manager???</a></li>
+
+						<li id="resource" ><a href="#" onclick="rightOpen(3)">资源管理</a></li>
+
+						<li id="resource11" ><a href="#" onclick="rightOpen(7)">账号同步</a></li>
+
+						<li id="author" class="active"><a  href="#"  onclick="rightOpen(6)">审批管理</a></li>
+
+						<li id="approve"><a href="#" onclick="rightOpen(9)">审计管理</a></li>
+
+					<li id="sysconfig"><a href="#" onclick="rightOpen(8)">系统配置</a></li>
+
+            	</ul>
+       		</div>
+			<div class="navbar-custom-menu" id="navbar-collapse">
+       			<ul class="nav navbar-nav">
+					<!-- User Account: style can be found in dropdown.less -->
+						<li class="dropdown user user-menu">
+		                	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		                  		<img src="../../image/user2-160x160.jpg" class="user-image" alt="User Image">
+		                  		<span class="hidden-xs">admin</span>
+		               		 </a>
+		                	 <ul class="dropdown-menu">
+		                  		<!-- User image -->
+		                  		<li class="user-header">
+		                    		<img src="../../image/user2-160x160.jpg" class="img-circle" alt="User Image">
+		                    		<p>admin<small>欢迎登录</small></p>
+		                  		</li>
+			                  	<!-- Menu Footer-->
+			                  	<li class="user-footer">
+				                    <div class="pull-left">
+				                      <a href="#" onclick="changePw()" class="btn btn-default btn-flat">修改密码</a>
+				                    </div>
+				                    <div class="pull-right">
+				                      <a href="../../logout.do" class="btn btn-default btn-flat">注销</a>
+				                    </div>
+			                  	</li>
+		                	</ul>
+		              	</li>
+       	              	<!-- Control Sidebar Toggle Button -->
+			         	<li>
+			                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+		              	</li>
+          			</ul>  
+          		</div>	
+        	</nav>
+	</div>
+	
+	<script type="text/javascript">
+		function changePw() {
+		$.post("/idm/currency/loginstatus.do",function(data){
+				if(data && new String(data) == "true"){
+			$('#right_content').load('../modifyPwd.jsp');
+				}else{
+					window.location.href="/idm/jsp/login.jsp";
+				}
+			})
+			$("#workspace").removeClass("active");
+			$(this).siblings().removeClass("active");
+			$(this).addClass("active");
+			
+		}
+	</script>
+</html>
+      </header>
+
+      <!-- =============================================== -->
+	 <div id="left_menu">
+	 <!-- Left side column. contains the sidebar -->
+      
+	 </div>
+      
+
+      <!-- =============================================== -->
+
+      <!-- Content Wrapper. Contains page content -->
+      <div id="right_content" class="content-wrapper">
+      </div><!-- /.content-wrapper -->
+		<iframe id="right_frame" src="" width="83%" class="content-wrapper">
+		</iframe>
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane" id="control-sidebar-home-tab">
+          </div><!-- /.tab-pane -->
+         
+        </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
+    <script type="text/javascript" src="/idm/js/demo.js"></script>
+  </body>
+</html>

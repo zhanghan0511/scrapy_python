@@ -1,0 +1,310 @@
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../../css/tipso.min.css">
+	<script type="text/javascript" src="../../js/tipso.min.js"></script>
+	<style type="text/css">
+		
+			.oe_form_field .dropdown-menu li .text {height:20px;}
+			.oe_form_field .dropdown-menu li a { height:26px;}
+		    .oe_form_field .dropdown-menu{ margin-top: 12px; }
+		    .oe_form_field button{
+		    	height:30px !important;
+		    	width:197px !important;
+		    }
+		    
+		</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			juqeryI18n();
+			//提示语初始化
+			$("[data-tipso]").tipso({useTitle:false});
+			getSynConfigInfo();
+			$("#synConfigName").focus();
+			
+			
+		});
+		//获取同步配置信息
+		function getSynConfigInfo(){
+			$.ajax({
+				type:"post",
+				url:"../synConfig/add.do",
+				data: '',
+				dataType:"json",
+				success:function(jsonObj){
+					if(jsonObj.flag == "1"){
+						swal("", jsonObj.error, "error");
+						return;
+					}
+					var resourceArr = jsonObj.resourceIdAndTitles;
+					$("#synResource").empty();
+					var nodeArr = [];
+					if(resourceArr==null){
+						nodeArr.push('<option >----当前无资源----</option>');
+					}else{
+						for(var key in resourceArr){
+							nodeArr.push('<option value="'+key+'">'+resourceArr[key]+'</option>');
+						}
+					}
+					$("#synResource").append(nodeArr.join(''));
+					initSelect(jsonObj.apiNames,jsonObj.listDataSourceNames);
+					$("#synchtype").change();
+				},
+				error:function(){
+					swal("", "获取同步配置修改信息失败了", "error");
+				}
+			});
+		}
+		//
+		function initSelect(interfaceArr,dataSourceArr){
+			$("#synchtype").change(function(){
+				$("#synchname").empty();
+				var nodeArr = [];
+				if($(this).val() == "2"){
+					$("#synTypeName").text("同步接口名");
+					$("#isAccOrDe").show();
+					$("#synchAccountOrDep").show();
+					$("#isshow").show();
+					if(interfaceArr.length==0){
+						nodeArr.push('<option >----当前无同步接口----</option>');
+					} else{
+						for(var i=0;i<interfaceArr.length;i++){
+							var inter = interfaceArr[i];
+							nodeArr.push('<option value="'+inter+'">'+inter+'</option>');
+						}
+					}
+				}else{
+					$("#synTypeName").text("同步数据源");
+					$("#isAccOrDe").hide();
+					$("#synchAccountOrDep").hide();
+					$("#isshow").hide();
+					if(dataSourceArr.length>0){
+						for(var i=0;i<dataSourceArr.length;i++){
+							var dataSource = dataSourceArr[i];
+							nodeArr.push('<option value="'+dataSource+'">'+dataSource+'</option>');
+						}
+					}else{
+						nodeArr.push('<option >----当前无同步数据源----</option>');
+					}
+				}
+				$("#synchname").append(nodeArr.join(''));
+				//初始化下拉框 --下拉多选插件
+		       	 $('#synchname').selectpicker({
+		            'selectedText': 'cat',
+		            'noneSelectedText': "请选择资源组",
+		         })
+			});
+			
+			
+		}
+		//新增同步任务
+		function addSynConfig(){
+			if(!doValidate(document.forms[0])){
+				return;
+			}
+			var name = $.trim($("#synConfigName").val());
+			if(name.length<=0){
+				swal("", "名称不能为空", "info");
+				return;
+			}
+			var synchtype = $.trim($("#synchtype").val());
+			var synchname = $.trim($("#synchname").val());
+			if(synchname=="----当前无同步接口----" ||"----当前无同步数据源----"==synchname) synchname = "" ;// 无接口 值为空
+			var synresname = $.trim($("#synResource").val());
+			if("resourceId" == "----当前无资源----"){ resourceId="" };
+			var synchAccountOrDep = $("input[name='isAccOrDe']:checked").val();
+			var datasource = "";
+			var description = $.trim($("#description").val());
+			if(synchtype == "1"){
+				datasource = $.trim($("#synchname").val());
+				synchname = "";
+				ison = "";
+			}
+			// 信息验证
+			if(synchname == undefined || synchname == null || synchname == ""){
+				 if(synchtype == 2){
+					 swal("","请选择同步接口","info");
+				 }else{
+					 swal("","请选择同步数据源","info");
+				 }
+					 return ;
+			 }
+			
+			var synConfig = {"synchConfigName":name,"dataBaseType":synchtype,"description":description,"synfacename":synchname,"issyschdept":synchAccountOrDep,"synresname":synresname};
+			$.ajax({
+				type:"post",
+				url:"../synConfig/addenter.do",
+				data:synConfig,
+				dataType:"json",
+				success:function(jsonObj){
+					if(jsonObj.flag == "1"){
+						swal("", jsonObj.error, "error");
+						return;
+					}else if(jsonObj.flag == "2"){
+						swal("", jsonObj.error, "info");
+					}
+					rightopen('../synConfig/synConfigList/1.do?toggleFlag='+toggleFlag);
+				},
+				error:function(){
+					swal("", $.i18n.prop("addFail"), "error");
+				}
+			});
+		}
+		function  rightopenlist() {
+			rightopen('../synConfig/synConfigList/1.do?toggleFlag='+toggleFlag);
+		}
+	</script>
+	</head>
+	<body>
+	   <section class="content-header">
+        	<div class="headercontainer">
+	        	<ul class="breadcrumb location" style="background-color: transparent;">
+	      			<li><a>同步任务管理</a></li>
+	      			<li><a>添加同步任务</a></li>
+	    		</ul>
+        	</div>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+          <div class="title">
+          		<button type="button" onclick="addSynConfig();" class="btn btn-danger btn-sm" >???button.save???</button>
+          		<span class="edit-or edit-text-mid">或</span> <a onclick="rightopenlist();"
+					class="hand edit-text-mid edit-give-up">???button.forgo???</a>
+          </div>
+          <div class="main">
+	          <div class="inner-title">
+		        <ul class="breadcrumb location" style="background-color: transparent; float: right;">
+					<li><a onclick="rightopenlist();">同步任务列表</a></li>
+					<li>添加同步任务</li>
+				</ul>
+	          </div>
+	          <form>
+	          <!-- 添加div-->
+		      <div class="oe_form_sheet " id="resgroup_edit" >
+	    		 <div style="margin-left: 20px; margin-bottom: 60px;">
+	          			<img alt="???pictureLost???" src="../../image/tbrw.jpg" style="float: left;">
+	          			<h3>
+            				<input data-fmt="CHENNUM:账号同步名" data-tipso="配置的标识名称，好记的名字" id="synConfigName" placeholder="同步任务名称" type="text" class="input_name">
+	          				<font size="3" color="red"> * </font>
+	          			</h3>
+	          	</div>
+	        	<table  border="0" cellspacing="0" cellpadding="0" class="oe_form_group">
+	        		<tbody>
+	        			<tr class="openerp_tr">
+	        				<td class="openerp-td" colspan="1" width="50%">
+	        					<table border="0" cellspacing="0" cellpadding="0" class="oe_form_group" style="margin-left: 15px;">
+	        						<tbody>
+	        							<tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="40%">
+	        										<label style="font-size: 13px;">
+													     同步类型
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field" style="font-size: 13px;">
+	        									    <select data-tipso="接口：调用同步的接口实现账号同步<br>数据源:通过配置直接操作数据库或AD等实现账号同步" id="synchtype" class="input_edit">
+													  <option value="2">接口</option>
+													  <option value="1">数据源</option>
+													</select><font size="3" color="red"> * </font>
+											    </span>
+	        								</td>
+	        							</tr>
+	        							
+	        							<!-- 多选下拉框 -->
+	        							<tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="40%">
+	        										<label style="font-size: 13px;" id="synTypeName_edit">
+													     同步接口
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field" style="font-size: 13px;">
+	        									    <select data-tipso="在本模块中定义的同步接口" id="synchname" class="selectpicker show-tick " multiple="multiple" data-live-search="false" >
+													  
+													</select>
+													<!-- <font size="3" color="red"> * </font> -->
+											    </span>
+	        								</td>
+	        							</tr>
+	        							
+	        							<!-- <tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="40%">
+	        										<label style="font-size: 13px;" id="synTypeName">
+													       同步接口名
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field" style="font-size: 13px;">
+	        									    <select data-tipso="在本模块中定义的同步接口" id="synchname" class="input_edit">
+													  
+													</select>
+													<font size="3" color="red"> * </font>
+											    </span>
+	        								</td> -->
+	        							</tr>
+	        						</tbody>
+	        					</table>
+	        				</td>
+							<td class="openerp-td" colspan="1" width="50%">
+	        					<table border="0" cellspacing="0" cellpadding="0" class="oe_form_group" style="margin-left: 15px;">
+	        						<tbody>
+	        							<tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="40%">
+	        										<label style="font-size: 13px;" id="isAccOrDe">
+													     是否同步组织架构
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field" style="font-size: 13px;" id="synchAccountOrDep">
+	        									    <label class="radio-inline">
+													  <input type="radio" checked name="isAccOrDe" value="true">
+													  	???yes???
+													</label>
+													<label class="radio-inline">
+													  <input type="radio" name="isAccOrDe" value="false">
+														???no???
+													</label>
+											    </span>
+	        								</td>
+	        							</tr>
+	        							<!-- <tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="45%">
+	        										<label style="font-size: 13px;">
+													      同步资源名
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field">
+	        									    <select data-tipso="需要实现同步的资源对象，在资源管理模块中添加" id="synResource" class="input_edit">
+													 
+													</select>
+													<font size="3" color="red"> * </font>
+											    </span>
+	        								</td>
+	        							</tr> -->
+	        							<tr class="openerp_tr">
+	        								<td class="oe_form_group_cell" colspan="1" width="40%">
+	        										<label style="font-size: 13px;">
+													      账号同步描述
+													 </label>
+	        								</td>
+	        								<td class="oe_form_group_cell border_label" colspan="1" width="60%">
+	        									<span class="oe_form_field">
+	        									    <input id="description" type="text" class="input_edit">
+											    </span>
+	        								</td>
+	        							</tr>
+	        						<tbody>
+	        					</table>
+	        				</td>
+	        			</tr>
+	        		</tbody>
+	        	</table>
+		     </div><!-- 添加div-end --></form>
+          </div>
+        </section><!-- /.content -->
+	</body>
+</html>

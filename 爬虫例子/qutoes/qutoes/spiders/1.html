@@ -1,0 +1,91 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>NetAuth统一身份认证管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="GENERATOR">
+    <!-- Bootstrap 3.3.5 -->
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/idm/css/blue.css">
+	<link rel="stylesheet" type="text/css" href="/idm/css/login.css">
+  </head>
+  <body>
+  <div class="logobox"> 统一身份认证管理系统</div>
+<div class="midboxbg">
+   <div class="midbox">
+      <div class="loginpic"></div>
+	  <div class="loginbox">
+	     <h3>用户登录</h3>
+	     <form name="form1" method="post" action="doLogin">
+		 <input id="logname" name="logname" onkeypress="javascript:login(event);" type="text" class="logininput user" placeholder="请输入用户名" onfocus="this.value=''" onblur="if(!value){value=defaultValue;}">
+		 <input id="password" name="password" onkeypress="javascript:login(event);" type="password" class="logininput password" placeholder="请输入密码" onfocus="this.value=''" onblur="if(!value){value=defaultValue;}">
+		 <div style="position:relative;width:290px;">
+		    <div class="yanzheng"><img id="validateCode" src="/idm/currency/getvalidateImgCode.do" style="width:auto;height: auto;"></div>
+			<input id="validateCode" name="validateCode" onkeypress="javascript:login(event);" type="text" class="logininput password" placeholder="请输入验证码" onfocus="this.value=''" onblur="if(!value){value=defaultValue;}">
+		 </div> 
+            <font color="red">&nbsp;</font>
+		 </form>
+		 <input name="" type="button" class="button" onclick="loginSubmit()" value="登 录">
+	  </div>
+   <div class="cls"></div>
+   </div>
+</div>
+<div class="banquan">版权所有：</div>
+     
+    <!-- jQuery 2.1.4 -->
+    <script src="/idm/js/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/idm/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="/idm/js/icheck.min.js"></script>
+    <script>
+	$().ready(function(){
+    $("#validateCode").click(function (){
+			var img = $("#validateCode");
+			img.attr("src",img.attr("src") + "?date=" + new Date());
+		});
+	});	
+            // 登陆
+            function login(e){
+                // enter
+                e = e || event;
+                if(e.keyCode==13){
+                    loginSubmit();
+                }
+                // esc
+                if(e.keyCode==27){
+                    // window.close();
+                } 
+            }
+            function loginSubmit() {
+        
+                if(document.form1.logname.value==null||trim(document.form1.logname.value)=="") {
+                    alert("用户名不能为空！");
+                    document.form1.logname.focus();
+                    return;   
+                }
+                if(document.form1.password.value==null||trim(document.form1.password.value)=="") {
+                    alert("用户密码不能为空！");
+                    document.form1.password.focus();
+                    return;   
+                }
+              /*   if(document.form1.validateCode.value==null||trim(document.form1.validateCode.value)=="") {
+                    alert("验证码不能为空！");
+                    document.form1.validateCode.focus();
+                    return;   
+                } */
+                document.form1.logname.value=trim(document.form1.logname.value);
+                document.form1.password.value=trim(document.form1.password.value);
+                document.form1.submit();
+            }
+   
+            function trim(str){  //删除左右两端的空格
+                return str.replace(/(^\s*)|(\s*$)/g, "");
+            }
+            
+          
+            
+    </script>
+  
+
+</body></html>
